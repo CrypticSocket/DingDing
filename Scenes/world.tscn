@@ -1,7 +1,8 @@
-[gd_scene load_steps=10 format=3 uid="uid://cwcc5fktpn7cj"]
+[gd_scene load_steps=11 format=3 uid="uid://cwcc5fktpn7cj"]
 
 [ext_resource type="Texture2D" uid="uid://dv5jk6ojjfd1e" path="res://Assets/TilesetFloor.png" id="1_amjkn"]
 [ext_resource type="PackedScene" uid="uid://bbxwfivhl0cp3" path="res://Scenes/player.tscn" id="1_d5hc8"]
+[ext_resource type="PackedScene" uid="uid://ctj2jiolvg72t" path="res://Scenes/Enemies/enemy_slime_basic.tscn" id="1_kfirm"]
 [ext_resource type="Script" path="res://Scripts/Camera.gd" id="2_7g6cg"]
 [ext_resource type="Texture2D" uid="uid://bxe0tae2dusdu" path="res://Assets/TilesetNature.png" id="2_s7rqk"]
 [ext_resource type="Texture2D" uid="uid://d0c4k7orwh33x" path="res://Assets/SpriteSheet16x16.png" id="3_14a76"]
@@ -2985,6 +2986,13 @@ sources/3 = SubResource("TileSetAtlasSource_api4j")
 
 [node name="World" type="Node2D"]
 y_sort_enabled = true
+
+[node name="Marker2D" type="Marker2D" parent="."]
+position = Vector2(233, 181)
+
+[node name="EnemySlimeBasic" parent="." node_paths=PackedStringArray("endPoint") instance=ExtResource("1_kfirm")]
+position = Vector2(178, 185)
+endPoint = NodePath("../Marker2D")
 
 [node name="Player" parent="." instance=ExtResource("1_d5hc8")]
 position = Vector2(138, 194)
