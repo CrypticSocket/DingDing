@@ -1,4 +1,4 @@
-[gd_scene load_steps=13 format=3 uid="uid://cwcc5fktpn7cj"]
+[gd_scene load_steps=17 format=3 uid="uid://cwcc5fktpn7cj"]
 
 [ext_resource type="Script" path="res://Scripts/world.gd" id="1_2a236"]
 [ext_resource type="Texture2D" uid="uid://dv5jk6ojjfd1e" path="res://Assets/TilesetFloor.png" id="1_amjkn"]
@@ -7,7 +7,10 @@
 [ext_resource type="PackedScene" uid="uid://cppxh85hrgmb2" path="res://Scenes/GUI/hearts_container.tscn" id="1_pyjjl"]
 [ext_resource type="Script" path="res://Scripts/Camera.gd" id="2_7g6cg"]
 [ext_resource type="Texture2D" uid="uid://bxe0tae2dusdu" path="res://Assets/TilesetNature.png" id="2_s7rqk"]
+[ext_resource type="Script" path="res://Scripts/GUI.gd" id="2_yj3qk"]
 [ext_resource type="Texture2D" uid="uid://d0c4k7orwh33x" path="res://Assets/SpriteSheet16x16.png" id="3_14a76"]
+[ext_resource type="PackedScene" uid="uid://52q4l5w0cfgk" path="res://Scenes/GUI/inventory_gui.tscn" id="3_qtc07"]
+[ext_resource type="PackedScene" uid="uid://ch2r0hp74w8w1" path="res://Scenes/Collectibles/life_pot.tscn" id="8_kwoga"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_8mtyu"]
 texture = ExtResource("1_amjkn")
@@ -2962,6 +2965,10 @@ texture = ExtResource("2_s7rqk")
 11:20/0/physics_layer_0/linear_velocity = Vector2(0, 0)
 11:20/0/physics_layer_0/angular_velocity = 0.0
 
+[sub_resource type="TileSetScenesCollectionSource" id="TileSetScenesCollectionSource_3o1o2"]
+resource_name = "Collectibles"
+scenes/1/scene = ExtResource("8_kwoga")
+
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_api4j"]
 texture = ExtResource("3_14a76")
 0:0/animation_frame_0/duration = 0.2
@@ -2985,18 +2992,35 @@ terrain_set_0/terrain_2/color = Color(1, 0.4, 0.32549, 1)
 sources/0 = SubResource("TileSetAtlasSource_8mtyu")
 sources/1 = SubResource("TileSetAtlasSource_d0bjb")
 sources/3 = SubResource("TileSetAtlasSource_api4j")
+sources/2 = SubResource("TileSetScenesCollectionSource_3o1o2")
 
 [node name="World" type="Node2D"]
 y_sort_enabled = true
 script = ExtResource("1_2a236")
 
 [node name="GUI" type="CanvasLayer" parent="."]
+process_mode = 3
+script = ExtResource("2_yj3qk")
 
 [node name="heartsContainer" parent="GUI" instance=ExtResource("1_pyjjl")]
 offset_left = 2.0
 offset_top = 2.0
 offset_right = 54.0
 offset_bottom = 15.0
+
+[node name="InventoryGUI" parent="GUI" instance=ExtResource("3_qtc07")]
+visible = false
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -65.5
+offset_top = -41.5
+offset_right = 65.5
+offset_bottom = 41.5
+grow_horizontal = 2
+grow_vertical = 2
 
 [node name="Marker2D" type="Marker2D" parent="."]
 position = Vector2(233, 181)
@@ -3035,3 +3059,12 @@ layer_2/y_sort_enabled = true
 layer_2/y_sort_origin = 0
 layer_2/z_index = 1
 layer_2/tile_data = PackedInt32Array(327700, 1, 0, 655385, 1, 0, 851976, 1, 0, 65548, 1, 0, 983063, 1, 0, 131097, 1, 0, 720897, 1, 0)
+layer_3/name = "Collectibles"
+layer_3/enabled = true
+layer_3/modulate = Color(1, 1, 1, 1)
+layer_3/y_sort_enabled = false
+layer_3/y_sort_origin = 0
+layer_3/z_index = 0
+layer_3/tile_data = PackedInt32Array(786438, 2, 65536, 131079, 2, 131072, 589831, 2, 65536, 196620, 2, 65536, 327693, 2, 65536, 786445, 2, 65536, 327695, 2, 65536, 458767, 2, 65536, 393232, 2, 65536, 524304, 2, 65536, 720913, 2, 65536, 262156, 2, 65536, 655369, 2, 65536, 655368, 2, 65536)
+
+[connection signal="inventoryToggled" from="GUI" to="." method="_on_gui_inventory_toggled"]

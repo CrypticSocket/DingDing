@@ -1,0 +1,85 @@
+[gd_scene load_steps=8 format=3 uid="uid://ch2r0hp74w8w1"]
+
+[ext_resource type="PackedScene" uid="uid://cjn66o8jiam4x" path="res://Scenes/Collectibles/collectible.tscn" id="1_qg50n"]
+[ext_resource type="Texture2D" uid="uid://ct7bqfe3yi45e" path="res://Assets/LifePot.png" id="2_0ssbm"]
+[ext_resource type="Script" path="res://Scripts/life_pot.gd" id="2_sijuw"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_lygay"]
+resource_local_to_scene = true
+size = Vector2(8, 10)
+
+[sub_resource type="Animation" id="Animation_rumbh"]
+resource_name = "Collected"
+length = 0.4
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:rotation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.4),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [0.0, 6.28319]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Sprite2D:self_modulate")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.4),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 1), Color(1, 1, 1, 0)]
+}
+
+[sub_resource type="Animation" id="Animation_mrxcw"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:rotation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [0.0]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Sprite2D:self_modulate")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 1)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_qak6x"]
+_data = {
+"Collected": SubResource("Animation_rumbh"),
+"RESET": SubResource("Animation_mrxcw")
+}
+
+[node name="LifePot" instance=ExtResource("1_qg50n")]
+position = Vector2(0, -2.40871)
+script = ExtResource("2_sijuw")
+
+[node name="Sprite2D" parent="." index="0"]
+texture = ExtResource("2_0ssbm")
+
+[node name="CollisionShape2D" parent="." index="1"]
+shape = SubResource("RectangleShape2D_lygay")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="." index="2"]
+libraries = {
+"": SubResource("AnimationLibrary_qak6x")
+}
